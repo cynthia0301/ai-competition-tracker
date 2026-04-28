@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全行业AI大赛追踪 - 影视平台专场</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap');
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: #0a0a0f; color: #e4e4e7; }
+        .gradient-text { background: linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); }
+        .glow { box-shadow: 0 0 30px rgba(139,92,246,0.15); }
+        .timeline-line { background: linear-gradient(to bottom, #8b5cf6, #ec4899, #f59e0b); }
+        .platform-badge { transition: all 0.3s ease; }
+        .platform-badge:hover { transform: translateY(-2px); }
+        .card-hover { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); border-color: rgba(139,92,246,0.3); }
+        .status-ongoing { background: linear-gradient(135deg, #10b981, #059669); }
+        .status-ended { background: linear-gradient(135deg, #6b7280, #4b5563); }
+        .status-upcoming { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .filter-btn.active { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeInUp 0.5s ease forwards; }
+        .hidden-item { display: none; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center">
+                    <i class="fas fa-robot text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold gradient-text">AI大赛追踪器</h1>
+                    <p class="text-xs text-zinc-500">全行业影视平台AI创作赛事汇总</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-zinc-500 hidden sm:block">最后更新: 2026-04-28</span>
+                <button onclick="scrollToTop()" class="w-9 h-9 rounded-lg glass flex items-center justify-center hover:bg-white/10 transition">
+                    <i class="fas fa-arrow-up text-zinc-400 text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <!-- Hero Stats -->
+        <section class="mb-10">
+            <!-- Top Row: Total + Key Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <!-- Total Events -->
+                <div class="glass rounded-2xl p-5 glow flex flex-col justify-center">
+                    <p class="text-zinc-500 text-xs mb-1">追踪赛事总数</p>
+                    <p class="text-4xl font-bold text-white">13<span class="text-lg text-zinc-500 font-normal ml-1">场</span></p>
+                </div>
+
+                <!-- Ongoing Events with Platforms -->
+                <div class="glass rounded-2xl p-5 md:col-span-2">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-zinc-500 text-xs"><i class="fas fa-circle text-emerald-400 text-[8px] mr-1.5 align-middle"></i>进行中赛事</p>
+                        <span class="text-emerald-400 text-xs font-semibold">5 场</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="flex items-center gap-1.5 bg-orange-500/15 border border-orange-500/25 rounded-lg px-3 py-1.5">
+                            <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                            <span class="text-sm text-orange-200 font-medium">芒果TV</span>
+                            <span class="text-xs text-orange-300/70">马栏山杯</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-orange-500/15 border border-orange-500/25 rounded-lg px-3 py-1.5">
+                            <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                            <span class="text-sm text-orange-200 font-medium">芒果TV</span>
+                            <span class="text-xs text-orange-300/70">AIGC微短剧</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-red-500/15 border border-red-500/25 rounded-lg px-3 py-1.5">
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                            <span class="text-sm text-red-200 font-medium">红果短剧</span>
+                            <span class="text-xs text-red-300/70">5亿扶持</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/25 rounded-lg px-3 py-1.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <span class="text-sm text-amber-200 font-medium">北京大视听</span>
+                            <span class="text-xs text-amber-300/70">追光计划</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-pink-500/15 border border-pink-500/25 rounded-lg px-3 py-1.5">
+                            <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                            <span class="text-sm text-pink-200 font-medium">B站</span>
+                            <span class="text-xs text-pink-300/70">AI造物联赛</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row: Prize Pool + Platforms -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Prize Pool by Platform -->
+                <div class="glass rounded-2xl p-5 md:col-span-2">
+                    <p class="text-zinc-500 text-xs mb-3"><i class="fas fa-trophy text-amber-400 mr-1.5"></i>各平台奖金 / 扶持金额</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="bg-white/5 rounded-xl p-3 text-center">
+                            <p class="text-xs text-zinc-500 mb-1">红果短剧</p>
+                            <p class="text-lg font-bold text-red-400">5<span class="text-sm">亿</span></p>
+                            <p class="text-[10px] text-zinc-600">真人短剧扶持</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-3 text-center">
+                            <p class="text-xs text-zinc-500 mb-1">B站</p>
+                            <p class="text-lg font-bold text-pink-400">300<span class="text-sm">万+</span></p>
+                            <p class="text-[10px] text-zinc-600">AI创作大赛</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-3 text-center">
+                            <p class="text-xs text-zinc-500 mb-1">腾讯视频</p>
+                            <p class="text-lg font-bold text-violet-400">120<span class="text-sm">万</span></p>
+                            <p class="text-[10px] text-zinc-600">AI短剧大赛</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-3 text-center">
+                            <p class="text-xs text-zinc-500 mb-1">芒果TV</p>
+                            <p class="text-lg font-bold text-orange-400">100<span class="text-sm">万</span></p>
+                            <p class="text-[10px] text-zinc-600">马栏山杯</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Covered Platforms -->
+                <div class="glass rounded-2xl p-5">
+                    <p class="text-zinc-500 text-xs mb-3"><i class="fas fa-sitemap text-blue-400 mr-1.5"></i>覆盖平台全景</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-violet-500/15 text-violet-300 text-xs font-medium">腾讯</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-medium">爱奇艺</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-orange-500/15 text-orange-300 text-xs font-medium">芒果TV</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-pink-500/15 text-pink-300 text-xs font-medium">B站</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-red-500/15 text-red-300 text-xs font-medium">红果/抖音</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-medium">北京大视听</span>
+                        <span class="px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-300 text-xs font-medium">优酷</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Bar -->
+        <section class="mb-8">
+            <div class="glass rounded-2xl p-4">
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="text-sm text-zinc-400 mr-1"><i class="fas fa-filter mr-2"></i>筛选:</span>
+                    <button class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium transition" onclick="filterEvents('all', this)">全部</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterEvents('ongoing', this)">进行中</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterEvents('ended', this)">已结束</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterEvents('upcoming', this)">即将开始</button>
+                    <div class="w-px h-6 bg-white/10 mx-2 hidden sm:block"></div>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('tencent', this)">腾讯视频</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('bilibili', this)">B站</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('iqiyi', this)">爱奇艺</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('mgtv', this)">芒果TV</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('douyin', this)">抖音</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-white/5 text-zinc-400 hover:bg-white/10 transition" onclick="filterByPlatform('hongguo', this)">红果</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="relative">
+            <div class="absolute left-6 md:left-8 top-0 bottom-0 w-0.5 timeline-line rounded-full"></div>
+
+            <!-- ==================== 进行中 ==================== -->
+
+            <!-- Ongoing 1: 马栏山杯AIGC原创动漫创意大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ongoing" data-platform="mgtv" style="animation-delay: 0.05s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-orange-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/20 text-orange-300">芒果TV</span>
+                                <span class="status-ongoing px-3 py-1 rounded-full text-xs font-semibold text-white">进行中</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2026「马栏山杯」AIGC原创动漫创意大赛</h3>
+                        </div>
+                        <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-emerald-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-emerald-200 font-medium whitespace-nowrap">2026.03.20 — 05.05</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">双赛道体系：创意征集（故事梗概、角色设定、美术风格）与成片征集（已完成原创漫画/动画）。百万元奖金，优胜者纳入中南传媒出版计划与芒果TV影视化计划，享有人才政策扶持。6月上旬揭晓结果。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-trophy mr-1"></i>百万奖金</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-palette mr-1"></i>动漫创意</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-tv mr-1"></i>影视化计划</span>
+                    </div>
+                    <a href="https://www.stdaily.com/web/gdxw/2026-03/21/content_489798.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-orange-400 hover:text-orange-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ongoing 2: 红果短剧真人短剧扶持计划 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ongoing" data-platform="hongguo" style="animation-delay: 0.1s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-red-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-red-500/20 text-red-300">红果短剧</span>
+                                <span class="status-ongoing px-3 py-1 rounded-full text-xs font-semibold text-white">进行中</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">红果短剧「真人短剧扶持计划」</h3>
+                        </div>
+                        <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-emerald-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-emerald-200 font-medium whitespace-nowrap">2026.04.15 — 长期</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">投入5亿元专项资金，聚焦内容创新与现实题材。在第十三届中国网络视听大会上发布。2026年内容总投入预算增加超40%。同时AI仿真人短剧在漫剧百强榜占比从7%激增至38%。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-coins mr-1"></i>5亿扶持</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-user mr-1"></i>真人短剧</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-chart-line mr-1"></i>投入+40%</span>
+                    </div>
+                    <a href="https://finance.sina.com.cn/tech/mobile/n/n/2026-04-24/doc-inhvqwee3152210.shtml" target="_blank" class="inline-flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ongoing 3: 追光计划国际微短剧大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ongoing" data-platform="hongguo" style="animation-delay: 0.15s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-amber-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300">北京大视听</span>
+                                <span class="status-ongoing px-3 py-1 rounded-full text-xs font-semibold text-white">进行中</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2026第二届「追光计划」国际微短剧大赛</h3>
+                        </div>
+                        <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-emerald-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-emerald-200 font-medium whitespace-nowrap">2026.04.17 — 进行中</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">北京市广电局正式启动，支持AIGC辅助创作。坚持"内容为核心"，红果、快手、爱奇艺、优酷等北京重点网络视听平台参与推荐作品。13部作品入选总局2026年首批"微短剧+"行动计划推荐剧目。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-globe mr-1"></i>国际大赛</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-robot mr-1"></i>AIGC支持</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>微短剧</span>
+                    </div>
+                    <a href="https://www.bj.chinanews.com.cn/news/2026/0417/102219.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ongoing 4: B站AI造物联赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ongoing" data-platform="bilibili" style="animation-delay: 0.2s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-pink-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-pink-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300">B站</span>
+                                <span class="status-ongoing px-3 py-1 rounded-full text-xs font-semibold text-white">进行中</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">B站「硅碳合战·S1——首届AI造物联赛」</h3>
+                        </div>
+                        <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-emerald-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-emerald-200 font-medium whitespace-nowrap">2026.04.27 — 赛季制</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">不设技术、学历、经验门槛，所有用户均可参赛。采用赛季制，需持续发布创作视频，展示AI产品从构想到迭代的全过程。主办方联络头部模型企业与投资机构，挖掘优质AI产品并提供支持。AI智能体站内搜索增长超500%。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-unlock mr-1"></i>零门槛</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-layer-group mr-1"></i>赛季制</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-robot mr-1"></i>AI产品</span>
+                    </div>
+                    <a href="https://finance.sina.com.cn/tech/2026-04-27/doc-inhvxhzn7914411.shtml" target="_blank" class="inline-flex items-center gap-2 text-sm text-pink-400 hover:text-pink-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ongoing 5: 芒果TV AIGC微短剧创作者生态计划 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ongoing" data-platform="mgtv" style="animation-delay: 0.25s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-orange-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/20 text-orange-300">芒果TV</span>
+                                <span class="status-ongoing px-3 py-1 rounded-full text-xs font-semibold text-white">进行中</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">芒果TV「AIGC微短剧创作者生态计划」</h3>
+                        </div>
+                        <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-emerald-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-emerald-200 font-medium whitespace-nowrap">2025.10 — 长期</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">面向全行业启动，将提供百部微短剧、漫剧版权。旨在构建AIGC微短剧创作生态，赋能创作者。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>微短剧</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-book mr-1"></i>百部版权</span>
+                    </div>
+                    <a href="https://cloud.tencent.com/developer/news/3119271" target="_blank" class="inline-flex items-center gap-2 text-sm text-orange-400 hover:text-orange-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ==================== 即将开始 ==================== -->
+
+            <!-- Upcoming 1: 腾讯游戏创作大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="upcoming" data-platform="tencent" style="animation-delay: 0.3s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-violet-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-violet-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/20 text-violet-300">腾讯</span>
+                                <span class="status-upcoming px-3 py-1 rounded-full text-xs font-semibold text-white">即将开始</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2026腾讯游戏创作大赛</h3>
+                        </div>
+                        <div class="shrink-0 bg-amber-500/10 border border-amber-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-amber-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-amber-200 font-medium whitespace-nowrap">2026.04.18 — 持续中</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">在武汉正式启幕，赛制重大升级。向参赛者免费开放"腾讯AI工具全家桶"，支持游戏开发者使用AI工具进行创作。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-gamepad mr-1"></i>游戏创作</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-robot mr-1"></i>AI工具全家桶</span>
+                    </div>
+                    <a href="https://www.stcn.com/article/detail/3765106.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ==================== 已结束 ==================== -->
+
+            <!-- Ended 1: B站AI创作大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="bilibili" style="animation-delay: 0.35s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-pink-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-pink-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300">B站</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">B站「AI创作大赛」</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2026.01.05 — 03.20</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">总奖金超300万元，77个获奖席位，一等奖100万。首次开放《三体》改编权。设"开放赛道"与"三体改编赛道"，作品时长不低于3分钟。百大UP主评审团，故事性优先。优胜者获每周过亿流量扶持。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-trophy mr-1"></i>300万+奖金</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-book mr-1"></i>三体改编权</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-star mr-1"></i>百大UP主评审</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-fire mr-1"></i>亿级流量扶持</span>
+                    </div>
+                    <a href="https://www.bilibili.com/blackboard/era/9qbSEy39uMMmRAF9.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-pink-400 hover:text-pink-300 transition">
+                        查看活动页面 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ended 2: 爱奇艺纳逗AIGC创投大会 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="iqiyi" style="animation-delay: 0.4s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-emerald-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300">爱奇艺</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">爱奇艺「纳逗・AIGC创投大会」</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2026.03.16 — 04.21</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">聚焦影视长片创作，开放15部IP库。招募电影长片、剧集（长剧/短剧/中剧）方案。优胜方可获直接投资与播出机会，AI工具全流程支持，行业导师辅导。6个头部方案在爱奇艺世界・大会展示。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>长片创投</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-book mr-1"></i>15部IP库</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-hand-holding-usd mr-1"></i>直接投资</span>
+                    </div>
+                    <a href="https://ndct.iqiyi.com/" target="_blank" class="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition">
+                        查看活动页面 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ended 3: 2026 CDC大会 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="all" style="animation-delay: 0.45s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-blue-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300">全行业</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2026中国电视剧制作产业大会（CDC）</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2026年3月</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">在深圳落幕，各平台释放大量AI影视相关信息。优酷以"精品化"为核心发布24部AI全流程制作作品。爱奇艺发布"三大计划"62部新片，"燎原计划"力推AIGC电影。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-industry mr-1"></i>产业大会</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>AI全流程</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-rocket mr-1"></i>AIGC电影</span>
+                    </div>
+                    <a href="https://lmtw.com/mzw/content/detail/id/252159/keyword_id/-1" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ended 4: 腾讯视频AI创作大赛·i短剧 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="tencent" style="animation-delay: 0.5s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-violet-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-violet-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/20 text-violet-300">腾讯视频</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">腾讯视频「AI创作大赛·i短剧」</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2025.10.24 — 已结束</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">总奖金120万元。分三类评选：最佳AI短剧（40万）、最佳AI技术短剧（20万）、最佳AI创意短剧（20万）。要求提交故事梗概、5集剧本及首集视频，AI生成内容占比不低于70%，1分钟以上真人/类真人短剧。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-trophy mr-1"></i>120万奖金</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>AI短剧</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-check mr-1"></i>AI占比≥70%</span>
+                    </div>
+                    <a href="https://www.dianyingjie.com.cn/2025/1025/399928.shtml" target="_blank" class="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ended 5: 腾讯视频首届AI短片创作大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="tencent" style="animation-delay: 0.55s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-violet-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-violet-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/20 text-violet-300">腾讯视频</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">腾讯视频首届「AI短片创作大赛」</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2025年Q3 — 已结束</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">累计收到投稿600+部作品，入围作品及终审评委已公布。大赛旨在探索AI在短片创作中的可能性。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-video mr-1"></i>AI短片</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-users mr-1"></i>600+投稿</span>
+                    </div>
+                    <a href="https://t.cj.sina.cn/articles/view/5224196989/13762eb7d02701jugq" target="_blank" class="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition">
+                        查看入围作品 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ended 6: 2025亚太地区AI短剧大赛 -->
+            <div class="event-card relative pl-16 md:pl-20 pb-10 animate-in" data-status="ended" data-platform="tencent" style="animation-delay: 0.6s">
+                <div class="absolute left-3 md:left-5 top-1 w-6 h-6 rounded-full bg-zinc-800 border-2 border-violet-500 flex items-center justify-center z-10">
+                    <div class="w-2 h-2 rounded-full bg-violet-500"></div>
+                </div>
+                <div class="glass rounded-2xl p-6 card-hover border border-white/5">
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="platform-badge px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/20 text-violet-300">腾讯频道</span>
+                                <span class="status-ended px-3 py-1 rounded-full text-xs font-semibold text-white">已结束</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2025亚太地区AI短剧大赛</h3>
+                        </div>
+                        <div class="shrink-0 bg-zinc-500/10 border border-zinc-500/25 rounded-xl px-3 py-2 text-right">
+                            <p class="text-xs text-zinc-400 mb-0.5"><i class="fas fa-calendar-alt mr-1"></i>活动时间</p>
+                            <p class="text-sm text-zinc-300 font-medium whitespace-nowrap">2025年Q4 — 已结束</p>
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">由中澳等多国AI团队和社群共同发起，旨在推动AI赋能短剧制作，面向亚太地区创作者。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-globe mr-1"></i>亚太地区</span>
+                        <span class="px-2 py-1 rounded-lg bg-white/5 text-xs text-zinc-400"><i class="fas fa-film mr-1"></i>AI短剧</span>
+                    </div>
+                    <a href="https://pd.qq.com/g/storystorm/post/B_c471c268f19f07001441152195496666610X60" target="_blank" class="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition">
+                        查看详情 <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Insights -->
+        <section class="mt-12 mb-12">
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold gradient-text mb-6"><i class="fas fa-lightbulb mr-2"></i>行业趋势洞察</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/5 rounded-xl p-5">
+                        <div class="w-10 h-10 rounded-lg bg-violet-500/20 flex items-center justify-center mb-3">
+                            <i class="fas fa-film text-violet-400"></i>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">短剧成为AI创作主战场</h3>
+                        <p class="text-sm text-zinc-400">各平台纷纷聚焦AI短剧赛道，腾讯视频、爱奇艺、红果等均推出专项扶持计划，AI短剧制作成本大幅下降。</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-5">
+                        <div class="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center mb-3">
+                            <i class="fas fa-coins text-pink-400"></i>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">资金投入持续加码</h3>
+                        <p class="text-sm text-zinc-400">从百万级奖金到5亿级扶持资金，平台对AI内容的投入呈指数级增长，红果2026年内容预算增长超40%。</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-5">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-3">
+                            <i class="fas fa-handshake text-emerald-400"></i>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">IP开放成新趋势</h3>
+                        <p class="text-sm text-zinc-400">B站开放《三体》改编权、爱奇艺开放15部IP库，头部IP与AI创作的结合成为吸引创作者的关键策略。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <p class="text-zinc-500 text-sm">AI大赛追踪器 - 数据来源于网络公开信息，持续更新中</p>
+            <p class="text-zinc-600 text-xs mt-2">最后更新: 2026年4月28日 | 仅供参考，以各平台官方信息为准</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        function filterEvents(status, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.querySelectorAll('.event-card').forEach(card => {
+                if (status === 'all' || card.dataset.status === status) {
+                    card.classList.remove('hidden-item');
+                } else {
+                    card.classList.add('hidden-item');
+                }
+            });
+        }
+
+        function filterByPlatform(platform, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.querySelectorAll('.event-card').forEach(card => {
+                if (platform === 'all' || card.dataset.platform === platform) {
+                    card.classList.remove('hidden-item');
+                } else {
+                    card.classList.add('hidden-item');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
